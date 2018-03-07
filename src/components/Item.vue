@@ -1,15 +1,15 @@
 <template>
-  <li class="news-item">
+  <li class="item">
     <span class="title">
-      <a :href="item.originalUrl" target="_blank" rel="noopener">{{ item.title }}</a>
+      <router-link :to="{ name: 'user', params: { id: item.id }}">{{item.name}}</router-link>
     </span>
     <br>
     <span class="meta">
       <span>
-        {{item.collectionCount}}收藏 | {{item.commentsCount}}评论
+        {{item.followers}} Followers | {{item.following}} Following
       </span>
     </span>
-    <p>{{item.content}}</p>
+    <p>{{item.desc}}</p>
   </li>
 </template>
 
@@ -17,17 +17,13 @@
 import { timeAgo } from '../util/filters'
 
 export default {
-  name: 'news-item',
+  name: 'item',
   props: ['item'],
-  // http://ssr.vuejs.org/en/caching.html#component-level-caching
-  serverCacheKey: ({ item: { id, __lastUpdated, time }}) => {
-    return `${id}::${__lastUpdated}::${timeAgo(time)}`
-  }
 }
 </script>
 
 <style lang="stylus">
-.news-item
+.item
   background-color #fff
   padding 20px 30px 20px
   border-bottom 1px solid #eee

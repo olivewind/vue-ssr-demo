@@ -3,16 +3,10 @@ const merge = require('webpack-merge')
 const base = require('./webpack.base.config')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
-const Category = require('../src/config/category');
 
 const config = merge(base, {
   entry: {
     app: './src/entry-client.js'
-  },
-  resolve: {
-    alias: {
-      'create-api': './create-api-client.js'
-    }
   },
   plugins: [
     // strip dev-only code in Vue source
@@ -43,8 +37,6 @@ const config = merge(base, {
 })
 
 if (process.env.NODE_ENV === 'production') {
-  const categories = Category.map(category => category.title).join('|');
-  const categoryUrlPattern = new RegExp('^/(' + categories + ')');
   config.plugins.push(
     // auto generate service worker
     new SWPrecachePlugin({
@@ -58,10 +50,6 @@ if (process.env.NODE_ENV === 'production') {
           urlPattern: '/',
           handler: 'networkFirst'
         },
-        {
-          urlPattern: categoryUrlPattern,
-          handler: 'networkFirst'
-        }
       ]
     })
   )

@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["/dist/0.29224685c5276a38e96c.js","84dc9c5317482d37e6d36cb59ef9c3ae"],["/dist/app.3800688f0c135161246d.js","121a290c07631d73493893dfbbb3a745"],["/dist/common.3800688f0c135161246d.css","9f766f985e8c51f458dcb29dc86364ee"],["/dist/manifest.3baf437b4ecf05ac8c85.js","1aa6f7aeb23b6a8667656d970a5847ad"],["/dist/vendor.25d41686e627ce7b975b.js","41e2690b3616688f33b6c225b0d30ac5"]];
+var precacheConfig = [["/dist/app.87a1bc9da7d68d5f3bd5.js","3bc2627b8c88698a7e4726ef8ff00eb5"],["/dist/common.87a1bc9da7d68d5f3bd5.css","80b49240d9b43f74b31f0714cfd7e402"],["/dist/manifest.54e67e9f17df71efc259.js","2dfb90926ae9c37da2e4979dfc343598"],["/dist/vendor.f7c40427c345cda403f8.js","5b5f38e71cdcdb0f761f2dee9753ed98"]];
 var cacheName = 'sw-precache-v3-vue-hn-' + (self.registration ? self.registration.scope : '');
 
 
@@ -286,7 +286,6 @@ self.addEventListener('fetch', function(event) {
 // Runtime cache configuration, using the sw-toolbox library.
 
 toolbox.router.get("/", toolbox.networkFirst, {});
-toolbox.router.get(/^\/(android|frontend|ios|product|design|freebie|article|backend|ai)/, toolbox.networkFirst, {});
 
 
 

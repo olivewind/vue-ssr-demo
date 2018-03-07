@@ -7,14 +7,12 @@ const compression = require('compression')
 const microcache = require('route-cache')
 const resolve = file => path.resolve(__dirname, file)
 const {createBundleRenderer} = require('vue-server-renderer')
-const axios = require('axios');
-const websiteConfig = require('./src/config/website');
 
 const isProd = process.env.NODE_ENV === 'production'
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
-// const serverInfo =
-//     `express/${require('express/package.json').version} ` +
-//     `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
+const serverInfo =
+    `express/${require('express/package.json').version} ` +
+    `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
 
 const app = express()
 
@@ -56,7 +54,6 @@ if (isProd) {
         app,
         templatePath,
         (bundle, options) => {
-            // 编译完成后取得内存中的数据
             console.log('bundle callback..');
             renderer = createRenderer(bundle, options)
         }
@@ -86,7 +83,7 @@ function render(req, res) {
     const s = Date.now()
 
     res.setHeader("Content-Type", "text/html")
-    // res.setHeader("Server", serverInfo)
+    res.setHeader("Server", serverInfo)
 
     const handleError = err => {
         if (err.url) {
@@ -102,7 +99,7 @@ function render(req, res) {
     }
 
     const context = {
-        title: '掘金', // default title
+        title: 'SSR-DEMO', // default title
         url: req.url
     }
     renderer.renderToString(context, (err, html) => {
@@ -115,22 +112,6 @@ function render(req, res) {
         }
     })
 }
-
-//  掘金接口的代理
-app.get('/v1/get_entry_by_rank', (req, res) => {
-    console.log(req.url);
-    axios({
-        method:'get',
-        url: websiteConfig.host + req.url,
-        responseType:'stream'
-    }).then(response => {
-        // console.log(response);
-        response.data.pipe(res);
-    }).catch(err => {
-        console.error(err);
-        res.status(500).send('500 | Internal Server Error')
-    });
-});
 
 app.get('*', isProd ? render : (req, res) => {
     readyPromise.then(() => render(req, res))

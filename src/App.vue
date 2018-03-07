@@ -5,8 +5,9 @@
         <router-link to="/" exact>
           <img class="logo" src="~public/logo-48.png" alt="logo">
         </router-link>
-        <router-link v-for="category in categories" :to="category.path" :key="category.id">{{category.title}}</router-link>
-        <a class="github" href="https://github.com/tiodot/vnews" target="_blank" rel="noopener">
+        <router-link  to="/boy">Boy</router-link>
+        <router-link  to="/girl">Girl</router-link>
+        <a class="github" href="https://cn.vuejs.org/" target="_blank" rel="noopener">
           Built with Vue.js
         </a>
       </nav>
@@ -17,19 +18,9 @@
   </div>
 </template>
 <script>
-  import Category from './config/category';
-  export default {
-      name: 'app',
 
-      data() {
-          return {
-              categories: Category.map(category => ({
-                  path: '/' + category.title,
-                  title: category.name,
-                  id: category.id
-              }))
-          }
-      }
+  export default {
+    name: 'app',
   }
 </script>
 

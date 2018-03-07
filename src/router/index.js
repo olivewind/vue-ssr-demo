@@ -1,28 +1,38 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Config from '../config/category';
+import Boy from '../views/boy.vue';
+import Girl from '../views/girl.vue';
+import User from '../views/User.vue';
 
 Vue.use(Router);
 
-// route-level code splitting
-const createListView = id => () => import('../views/CreateListView').then(m => m.default(id))
-// const ItemView = () => import('../views/ItemView.vue');
-// const UserView = () => import('../views/UserView.vue')
-
-const routes = Config.map(config => ({
-    path: `/${config.title}`,
-    component: createListView(config.title)
-}));
-
-routes.push(
-    { path: '/', redirect: routes[0].path }
-);
+const routes = [
+  {
+    name: 'boy',
+    path: '/boy', 
+    component: Boy,
+  },
+  {
+    name: 'girl',
+    path: '/girl', 
+    component: Girl,
+  },
+  {
+    name: 'user',
+    path: '/user/:id', 
+    component: User,
+  },
+  {
+    path: '/', 
+    redirect: '/boy',
+  }
+];
 
 export function createRouter() {
     return new Router({
         mode: 'history',
         fallback: false,
-        scrollBehavior: () => ({y: 0}),
+        // scrollBehavior: () => ({y: 0}),
         routes: routes
     });
 }
